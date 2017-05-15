@@ -88,6 +88,19 @@ public class LwOptClassDAO extends HibernateDaoSupport {
 		}
 	}
 
+	public List findByPropertyLike(String propertyName, Object value) {
+		log.debug("finding LwOptClass instance with property: " + propertyName
+				+ ", value: " + value);
+		try {
+			String queryString = "from LwOptClass as model where model."
+					+ propertyName + " like ?";
+			return getHibernateTemplate().find(queryString, "%"+value+"%");
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
 	public List findAll() {
 		log.debug("finding all LwOptClass instances");
 		try {

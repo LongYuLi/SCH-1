@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -100,6 +101,10 @@ public class LwOptLoginDAO extends HibernateDaoSupport {
 			log.error("find by property name failed", re);
 			throw re;
 		}
+	}
+
+	public List findByHql(String hql){
+		return getHibernateTemplate().find(hql);
 	}
 
 	public List findAll() {

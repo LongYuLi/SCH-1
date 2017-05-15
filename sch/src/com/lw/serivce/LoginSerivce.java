@@ -3,11 +3,13 @@ package com.lw.serivce;/**
  */
 
 import com.lw.bean.LwOptLogin;
+import com.lw.bean.LwOptPersonnel;
 import com.lw.dao.LwOptLoginDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 李龙雨
@@ -42,6 +44,14 @@ public class LoginSerivce {
 
     public void saveLoginAndPersonnel(LwOptLogin lwOptLogin){
         lwOptLoginDAO.save(lwOptLogin);
+    }
+
+
+    public List findByProperty(String parm1, Object p1){
+        return lwOptLoginDAO.findByProperty(parm1, p1);
+    }
+    public List findByHql(String hql){
+        return lwOptLoginDAO.findByHql(hql);
     }
 
 }

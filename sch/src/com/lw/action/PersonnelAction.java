@@ -7,12 +7,15 @@ import com.google.gson.GsonBuilder;
 import com.lw.bean.LwOptLogin;
 import com.lw.bean.LwOptPersonnel;
 import com.lw.serivce.LoginSerivce;
+import com.lw.serivce.PersonnelSerivce;
 import com.lw.util.DateUtil;
+import com.lw.util.ResporeUtil;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,6 +26,8 @@ import java.util.List;
 public class PersonnelAction {
     @Autowired
     private LoginSerivce loginSerivce;
+    @Autowired
+    private PersonnelSerivce personnelSerivce;
     private HttpServletResponse response = ServletActionContext.getResponse();
     private HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -33,6 +38,10 @@ public class PersonnelAction {
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(s);
         return null;
+    }
+
+    public void findAllPer() throws IOException {
+        ResporeUtil.write(response,ResporeUtil.gson.toJson(personnelSerivce.findAll()));
     }
 
     public String overdue() throws Exception {
@@ -112,4 +121,18 @@ public class PersonnelAction {
         response.getWriter().write("1");
         return null;
     }
+
+    public void findBuyKey() throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String key = request.getParameter("key");
+       String hql="from LwOptLogin as a where 1=1 and a.lwOptPersonnel.personnelName like '%"+key+"%' or a.loginName like '%"+key+"%'";
+       List list=loginSerivce.findByHql(hql);
+        Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm:ss").create();
+        String s = gson.toJson(list);
+        response.getWriter().write(s);
+
+    }
+
+
+
 }
