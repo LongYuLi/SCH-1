@@ -5,6 +5,7 @@ package com.lw.action;/**
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lw.bean.LwOptResource;
+import com.lw.bean.LwOptRoleResource;
 import com.lw.serivce.ResourcesSerivce;
 import com.lw.serivce.RoleSerivce;
 import com.opensymphony.xwork2.ActionContext;
@@ -47,10 +48,38 @@ public class RoleAction {
     public String selectRessourcesByRole() throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("id");
-        List list = roleSerivce.findByProperty(Integer.valueOf(id));
-        request.setAttribute("list",list);
-        response.getWriter().write("1");
+        List<LwOptRoleResource> list = roleSerivce.findByProperty(Integer.valueOf(id));
+        StringBuffer stringBuffer=new StringBuffer();
+        for (LwOptRoleResource roleResource : list) {
+            stringBuffer=stringBuffer.append(roleResource.getLwOptResource().getResourceId()+",");
+        }
+        String s = stringBuffer.toString();
+        response.getWriter().write(s);
         return null;
     }
-
+    public void attachDirty() throws Exception {
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String select = request.getParameter("select");
+        String dizi = request.getParameter("obj");
+        System.out.println(id);
+        System.out.println(name);
+        System.out.println(select);
+        System.out.println(dizi);
+        //if(id==null || "".equals(id)){
+        //    LwOptResource lwOptResource = new LwOptResource();
+        //    lwOptResource.setResourceName(name);
+        //    lwOptResource.setResourceParent(Integer.valueOf(select));
+        //    lwOptResource.setResourcePath(dizi);
+        //    resourcesSerivce.updateResource(lwOptResource);
+        //    response.getWriter().write("2");
+        //    return;
+        //}
+        //LwOptResource lwOptResource = resourcesSerivce.findById(Integer.valueOf(id));
+        //lwOptResource.setResourceName(name);
+        //lwOptResource.setResourceParent(Integer.valueOf(select));
+        //lwOptResource.setResourcePath(dizi);
+        //resourcesSerivce.updateResource(lwOptResource);
+        response.getWriter().write("1");
+    }
 }

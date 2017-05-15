@@ -22,17 +22,33 @@
                 </h4>
             </div>
             <div class="modal-body" id="per_info">
-                <c:forEach items="${listres}" var="listres">
-                    <div class="checkbox">
-                        <label>
-                            <%--<% boolean aa =false; %>--%>
-                            <%--<c:forEach items="${list}" var="lisy">--%>
-                                <%--<c:if test="${listres.resourceId==lisy.resourceId}"><% aa=true; break;%></c:if>--%>
-                            <%--</c:forEach>--%>
-                            <input type="checkbox" value="${listres.resourceId}">${listres.resourceName}
-                        </label>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <input type="hidden" id="loginId"/>
+                        <label for="people_name" class="col-sm-3 control-label">角色名称：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="people_name"/>
+                        </div>
                     </div>
-                </c:forEach>
+                    <div class="form-group">
+                        <label for="people_name" class="col-sm-3 control-label">角色描述：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="people_miaoshu"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="people_name" class="col-sm-3 control-label">角色权限：</label>
+                        <div class="col-sm-9">
+                            <c:forEach items="${listres}" var="listres">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="quanxian" id="quanxian${listres.resourceId}" value="${listres.resourceId}">${listres.resourceName}
+                                    </label>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -41,18 +57,9 @@
         </div>
     </div>
 </div>
+<button type="button" class="btn btn-primary btn-lg" onclick="insert_resource()">+ 新增</button>
 <table class="table" id="para_table">
 
 </table>
-<div>
-    --------
-    <c:forEach items="${listres}" var="listres">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="${listres.resourceId}">${listres.resourceName}
-            </label>
-        </div>
-    </c:forEach>
-</div>
 </body>
 </html>
